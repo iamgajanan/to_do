@@ -1,7 +1,7 @@
 pipeline {
   agent {
     docker {
-      image 'cirrusci/flutter:3.27.4'
+      image 'jenkins/jenkins'
       args '-u root:root'
     }
   }
