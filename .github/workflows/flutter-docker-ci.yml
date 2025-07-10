@@ -1,0 +1,32 @@
+name: Flutter CI using Docker (3.27.4)
+
+on:
+  push:
+    branches:
+      - dev_dock
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 🛒 Checkout Source Code
+        uses: actions/checkout@v3
+
+      - name: 🐳 Build Docker Image with Flutter 3.27.4
+        run: |
+          docker build -t flutter_3.27.4 .
+
+      - name: 🧪 Build APK using Docker
+        run: |
+          docker run --rm \
+            -v ${{ github.workspace }}:/app \
+            -w /app \
+            flutter_3.27.4 \
+            flutter build apk --split-per-abi
+
+      - name: 📦 Upload APKs as Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: flutter-apks
+          path: build/app/outputs/flutter-apk/app-*.apk

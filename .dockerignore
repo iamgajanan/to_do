@@ -1,0 +1,43 @@
+# Flutter build outputs
+
+build/
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.packages
+.pub-cache/
+.pub/
+
+# Android
+android/.gradle/
+android/app/build/
+
+# iOS
+ios/Pods/
+ios/Flutter/Flutter.framework/
+ios/Flutter/Flutter.podspec
+ios/.symlinks/
+ios/Runner.xcworkspace/
+
+# macOS
+macos/Flutter/ephemeral/
+
+# VS Code, IntelliJ, Xcode and other IDE settings
+.idea/
+.vscode/
+*.iml
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Git
+.git/
+.gitignore
+flutter3.27/bin/cache/
+flutter3.27/.git/
+flutter3.27/.dart_tool/
+flutter3.27/dev/
+flutter3.27/examples/
+flutter3.27/packages/
+flutter3.27/.pub-cache/

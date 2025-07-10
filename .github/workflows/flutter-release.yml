@@ -1,0 +1,39 @@
+name: Flutter Build with Docker
+
+on:
+  push:
+    branches:
+      - dev_dock
+    tags:
+      - "v*.*.*"   # Triggers release when you tag like v1.0.0
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Build Docker image
+        run: docker build -t flutter_build .
+
+      - name: Run Docker container & extract APKs
+        run: |
+          docker create --name flutter_container flutter_build
+          docker cp flutter_container:/app/build/app/outputs/flutter-apk ./artifacts
+          docker rm flutter_container
+
+      - name: Upload APKs as GitHub Artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: flutter-apks
+          path: artifacts/*.apk
+
+      - name: Upload APKs to GitHub Release (only on tag)
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: artifacts/*.apk
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
